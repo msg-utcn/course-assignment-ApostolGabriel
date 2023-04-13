@@ -1,0 +1,22 @@
+button {
+    color: #c398ec;
+    background-color: dimgrey;
+    padding: 20px 20px 20px 20px;
+    margin: 5px 5px 5px 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #858282;
+}
+
+.joke_list {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+}
+
+li {
+    background-color: #c398ec;
+
+}
