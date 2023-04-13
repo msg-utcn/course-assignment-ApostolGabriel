@@ -1,9 +1,6 @@
 async function getRandomJoke() {
-    fetch('https://official-joke-api.appspot.com/random_joke')
-        .then(response => {
-        return response.json();
-    });
-    return null;
+    const response = await fetch('https://official-joke-api.appspot.com/random_joke');
+    return response.json();
 }
 async function onClickGet() {
     const joke = await getRandomJoke();
@@ -11,7 +8,7 @@ async function onClickGet() {
     const li1 = document.createElement("li");
     li1.appendChild(document.createTextNode(joke.setup));
     const li2 = document.createElement("li");
-    li2.appendChild(document.createTextNode(joke.punchLine));
+    li2.appendChild(document.createTextNode(joke.punchline));
     ul.appendChild(li1);
     ul.appendChild(li2);
 }

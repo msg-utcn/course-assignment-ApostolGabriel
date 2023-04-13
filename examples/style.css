@@ -15,3 +15,8 @@ button:hover {
     flex-flow: column wrap;
     justify-content: center;
 }
+
+li {
+    background-color: #c398ec;
+
+}
