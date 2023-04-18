@@ -13,10 +13,10 @@
     "@nrwl/jest": "15.9.2",
     "@nrwl/js": "15.9.2",
     "@nrwl/linter": "15.9.2",
-    "@nrwl/nest": "^15.9.2",
+    "@nrwl/nest": "15.9.2",
     "@nrwl/node": "15.9.2",
     "@nrwl/webpack": "15.9.2",
-    "@nrwl/workspace": "15.5.0",
+    "@nrwl/workspace": "15.9.2",
     "@types/jest": "^29.4.0",
     "@types/node": "~18.7.1",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
@@ -25,7 +25,7 @@
     "eslint-config-prettier": "8.1.0",
     "jest": "^29.4.1",
     "jest-environment-node": "^29.4.1",
-    "nx": "15.5.0",
+    "nx": "15.9.2",
     "prettier": "^2.6.2",
     "ts-jest": "^29.0.5",
     "ts-node": "10.9.1",
@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.3.0",
@@ -45,3 +46,4 @@
     "typeorm": "^0.3.13"
   }
 }
+

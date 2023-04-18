@@ -1,40 +1,49 @@
-import { API_ROUTE } from './question-management.config';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { QuestionDto } from './dtos/question.dto';
-import { Repository } from 'typeorm';
-import { QuestionModel } from './model/question.model';
-import { InjectRepository } from '@nestjs/typeorm';
-import { QuestionTopic } from './model/question-topic';
+import { QuestionService } from './question.service';
+import { CreateQuestionDto } from './dtos/create-question.dto';
+import { UpdateQuestionDto } from './dtos/update-question.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { QuestionManagementConfig } from './question-management.config';
 
-@Controller(API_ROUTE)
+@ApiTags(QuestionManagementConfig.SWAGGER_FEATURE)
+@Controller(QuestionManagementConfig.API_ROUTE)
 export class QuestionManagementController {
-  constructor(
-    @InjectRepository(QuestionModel)
-    private questionModelRepository: Repository<QuestionModel>
-  ) {}
+  constructor(private questionService: QuestionService) {}
 
   @Get()
   async getAllQuestions(): Promise<QuestionDto[]> {
-    return this.questionModelRepository.find();
+    return this.questionService.readAll();
   }
 
   @Get(':id')
   async getQuestionById(@Param('id') id: string): Promise<QuestionDto> {
-    return this.questionModelRepository.findOneBy({ id: id });
+    return this.questionService.readById(id);
   }
 
   @Post()
-  async createQuestion(@Body() question: QuestionDto): Promise<QuestionDto> {
-    return this.questionModelRepository.save(
-      new QuestionModel({
-        id: undefined,
-        title: 'test',
-        postedBy: 'ion',
-        rating: 0,
-        creationDate: new Date().toISOString(),
-        topic: QuestionTopic.JavaScript,
-        content: 'Hello there General Kenobi',
-      })
-    );
+  async createQuestion(@Body() dto: CreateQuestionDto): Promise<QuestionDto> {
+    return this.questionService.create(dto);
+  }
+
+  @Patch(':id')
+  async deleteQuestion(
+    @Param('id') id: string,
+    @Body() dto: UpdateQuestionDto
+  ): Promise<QuestionDto> {
+    return this.questionService.update(id, dto);
+  }
+
+  @Delete(':id')
+  async updateQuestion(@Param('id') id: string): Promise<void> {
+    return this.questionService.delete(id);
   }
 }

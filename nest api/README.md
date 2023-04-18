@@ -1,26 +1,71 @@
-# Week 3
+# Week 4
 
-## Assignment 
+## Setting Up 
 
-- Clone this week (branch: `week-3`) onto your computer
+- Clone this week (branch: `week-4`) onto your computer and overwrite the code used in your personal repository (or follow the recordings and do the changes yourself)
+  - Take care to not overwrite the hidden `.git` folder
 - Run `npm install` inside the cloned folder
-- Install docker onto your device and have it run
-- After installing it you should be able to open a terminal and run `docker --version`
-- Run the `docker-compose.yml` from this week `/docker` folder using the `docker-compose up` in a terminal opened in that folder
-- This will start a postgres database on your device exposed on port `5432` (so take care that port is not in use)
-- Now go back to the root folder and run the application using `npm run serve:api`
-- It should start the application as in our course
+- Go to `docker` folder and run a `docker-compose up -d` to start the database
 
 ## Reading
 
-- [Install Docker](https://www.docker.com/products/docker-desktop/)
-  - [Windows Install](https://docs.docker.com/desktop/install/windows-install/)
-  - The WSL2 backend is the recommended approach over HyperV backend
-- [Docker: Getting Started](https://docs.docker.com/get-started/#start-the-tutorial)
-- [Using Docker-Compose](https://docs.docker.com/get-started/08_using_compose/)
-- [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install)
+- [TypeORM Repository](https://docs.nestjs.com/techniques/database#repository-pattern)
+- [OpenAPI Types and Parameters](https://docs.nestjs.com/openapi/types-and-parameters)
+- [NestJs Providers](https://docs.nestjs.com/providers)
+- [Bcrypt Hashing](https://docs.nestjs.com/security/encryption-and-hashing#hashing)
 
-## Videos (Optional)
+## Assignment
 
-- [Docker Tutorial](https://www.youtube.com/watch?v=d-PPOS-VsC8)
-- [Intro to Docker](https://www.youtube.com/watch?v=WcQ3-M4-jik)
+- Create a new folder under `apps/api/app/` called `users`
+- Create a new module `users.module`
+- Create a new Model for a User and a new enum for User roles
+```typescript
+export enum UserRole {
+  USER = 'USER',
+  ADMIN = 'ADMIN'
+}
+
+export class UserModel {
+  id?: string;
+  name: string;
+  email: string;
+  roles: UserRole[];
+}
+```
+- Annotate the model with TypeOrm Annotations
+- Create some DTO's for
+```typescript
+export class RegisterUserDto {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export class UserDto {
+  id?: string;
+  name: string;
+  email: string;
+  roles: UserRole[];
+}
+```
+- Annotate and describe the DTO's with OpenAPI annotations (description, examples)
+- Create a service for users as a file `users.service` it will have the following methods
+  - registerUser 
+    - install bcrypt by running `npm install bcrypt` in the root directory
+    - use `bcrypt.hash(password, saltOrRounds)` where `saltOrRounds` is a random number
+    - replace the `RegisterUserDto.password` with the resulted hashed password
+    - save the user in the vault
+  - getUserById
+  - getUserByEmail
+  - getUsers
+- Create a controller for users as a file `users.controller` with the following endpoints
+  - getUserById
+  - getUsers
+  - registerUser
+- Annotate the Controller service with `@Controller` and `@ApiTags`
+- Make sure to import the `UsersController` and provide the `UsersService` in the `UsersModule`
+- Make sure to import the `TypeOrmModule.forFeature([UserModel])` inside the `UsersModule`
+- Make sure to import the `UsersModule` inside the `AppModule`
+- Add inside the `main.ts` the new OpenAPI tag for the Users feature
+- Start the application and test your functionality
+- Create a PR and add me as a reviewer
