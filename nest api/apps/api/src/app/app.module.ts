@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { QuestionManagementModule } from './question-management/question-management.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import {UsersModule} from "./users/users.module";
+import {QuestionModel} from "./question-management/model/question.model";
+import {UserModel} from "./users/models/user.model";
 
 @Module({
   imports: [
@@ -22,6 +25,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
     QuestionManagementModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
